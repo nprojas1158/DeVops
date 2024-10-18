@@ -11,8 +11,8 @@ class EmailBlacklist(Base):
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     email = Column(String, nullable = False)
-    appId = Column(UUID(as_uuid=True), default=uuid.uuid4, nullable = False)
-    reason = Column(String(255), nullable = True)
+    app_uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, nullable = False)
+    blocked_reason = Column(String(255), nullable = True)
     dirIP = Column(String, nullable = False)
     dateHour = Column(DateTime, nullable = False)
 
@@ -21,15 +21,15 @@ class EmailBlacklist(Base):
     ):
         self.id = uuid.uuid4()
         self.email = email
-        self.appId = appId
-        self.reason = reason
+        self.app_uuid = appId
+        self.blocked_reason = reason
         self.dirIP = dirIp
         self.dateHour = dateHour
     
-    class EmailBlacklistSchema(Schema):
-        id = fields.UUID()
-        email = fields.Str()
-        appId = fields.UUID()
-        reason = fields.Str()
-        dirIp = fields.Str()
-        dateHour = fields.DateTime()
+class EmailBlacklistSchema(Schema):
+    id = fields.UUID()
+    email = fields.Str()
+    app_uuid = fields.UUID()
+    blocked_reason = fields.Str()
+    dirIp = fields.Str()
+    dateHour = fields.DateTime()
