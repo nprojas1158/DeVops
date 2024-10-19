@@ -7,14 +7,20 @@ blacklists_blueprint = Blueprint('blacklists', __name__)
 
 @blacklists_blueprint.route('/blacklists', methods=['POST'])
 def create():
-    Authenticate(auth_token()).verify()
-    client_ip = request.remote_addr
-    black = CreateBlacklist(request.get_json(), client_ip).execute()
-    return black, 201
+    auth = Authenticate(auth_token()).verify()
+    
+    if auth == True:
+        client_ip = request.remote_addr
+        black = CreateBlacklist(request.get_json, client_ip).execute()
+        return jsonify(black), 201
 
 @blacklists_blueprint.route('/blacklists/ping', methods=['GET'])
 def ping():
-    return jsonify('pong'), 200
+    auth = Authenticate(auth_token()).verify()
+    
+    if auth == True:
+        return jsonify('pong'), 200
+    
 
 def auth_token():
     try:
@@ -25,3 +31,4 @@ def auth_token():
         return authorization
     except Exception as e:
         raise MissingToken()
+   

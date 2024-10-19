@@ -1,19 +1,17 @@
-from ..errors.errors import MissingToken, Unauthorized
-import jwt
+from ..errors.errors import MissingToken, Unauthorized, ExternalError
 
-SECRET_KEY = 'temporal'
 
 class Authenticate():
     def __init__(self, token):
         self.token = token
 
     def verify(self):
-        if not self.token:
-            raise MissingToken
+        val_token = "Bearer 75c893b6-9084-4ce2-af52-805d5d124267"
         
-        # decoded = jwt.decode(self.token, SECRET_KEY, algorithms=["HS256"])
-        # print(decoded)
-        return self.token
-
-        #except jwt.InvalidTokenError:
-         #   raise Unauthorized
+        if self.token is None:
+            return MissingToken()
+        
+        if val_token == self.token:
+            return True
+        else:
+            raise Unauthorized()
