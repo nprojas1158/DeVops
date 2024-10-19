@@ -11,8 +11,8 @@ def create():
     
     if auth == True:
         client_ip = request.remote_addr
-        black = CreateBlacklist(request.get_json, client_ip).execute()
-        return jsonify(black), 201
+        black = CreateBlacklist(request.get_json(), client_ip).execute()
+        return black, 201
 
 @blacklists_blueprint.route('/blacklists/ping', methods=['GET'])
 def ping():
