@@ -16,10 +16,7 @@ def create():
 
 @blacklists_blueprint.route('/blacklists/ping', methods=['GET'])
 def ping():
-    auth = Authenticate(auth_token()).verify()
-    
-    if auth == True:
-        return jsonify('pong'), 200
+    return jsonify('pong'), 200
     
 
 def auth_token():
