@@ -2,10 +2,10 @@ from dotenv import load_dotenv, find_dotenv
 import os
 loaded = load_dotenv(os.path.join(os.path.dirname(__file__), '..','.env.template'))
 
-from errors.errors import ApiError
-from blueprints.blacklists import blacklists_blueprint
-from model.emailBlacklist import EmailBlacklist
-from session import engine
+from .errors.errors import ApiError
+from .blueprints.blacklists import blacklists_blueprint
+from .model.emailBlacklist import EmailBlacklist
+from .session import engine
 from flask import Flask, jsonify
 
 app = Flask(__name__)

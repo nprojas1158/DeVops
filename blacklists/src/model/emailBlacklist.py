@@ -17,7 +17,7 @@ class EmailBlacklist(Base):
     dateHour = Column(DateTime, nullable = False)
 
     def __init__(
-            self, id, email, appId, reason, dirIp, dateHour
+            self, email, appId, reason, dirIp, dateHour
     ):
         self.id = uuid.uuid4()
         self.email = email
@@ -25,7 +25,12 @@ class EmailBlacklist(Base):
         self.blocked_reason = reason
         self.dirIP = dirIp
         self.dateHour = dateHour
-    
+
+class CreatedEmailBlacklistSchema(Schema):
+    id = fields.UUID()
+    email = fields.Str()
+    dateHour = fields.DateTime()
+
 class EmailBlacklistSchema(Schema):
     id = fields.UUID()
     email = fields.Str()
