@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from ..commands.create_blacklist import CreateBlacklist
+from ..commands.getList import getBlacklist
 from ..commands.authenticate import Authenticate
 from ..errors.errors import MissingToken
 
@@ -19,6 +20,18 @@ def ping():
     return jsonify('pong'), 200
     
 
+@blacklists_blueprint.route('/blacklists/<email>', methods=['GET'])
+def ValidarEmail(email):
+    auth = Authenticate(auth_token()).verify()
+
+    if auth == True:
+        black = getBlacklist(email).validar_email()
+
+        if black['exists'] == True:
+            return jsonify(black), 200
+        else:
+            return jsonify(black), 204
+    
 def auth_token():
     try:
         if 'Authorization' in request.headers:
