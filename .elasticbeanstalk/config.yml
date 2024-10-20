@@ -1,18 +1,22 @@
 branch-defaults:
+  addEmail:
+    environment: docker-blacklist
+    group_suffix: null
   main:
     environment: Appbeanstalk2021-env
     group_suffix: null
 global:
-  application_name: App_beanstalk_2021
+  application_name: docker-blacklist
   branch: null
   default_ec2_keyname: aws-eb
-  default_platform: Python 3.8
-  default_region: us-east-2
+  default_platform: Docker
+  default_region: us-east-1
   include_git_submodules: true
   instance_profile: null
   platform_name: null
   platform_version: null
   profile: eb-cli
   repository: null
-  sc: null
+  RootVolumeType: gp3
+  sc: git
   workspace_type: Application
