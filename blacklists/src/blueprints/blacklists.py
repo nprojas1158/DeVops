@@ -27,10 +27,7 @@ def ValidarEmail(email):
     if auth == True:
         black = getBlacklist(email).validar_email()
 
-        if black['exists'] == True:
-            return jsonify(black), 200
-        else:
-            return jsonify(black), 204
+        return jsonify(black), 200
     
 def auth_token():
     try:
