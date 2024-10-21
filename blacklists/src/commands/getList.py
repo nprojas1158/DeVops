@@ -1,7 +1,8 @@
-from errors.errors import IncompleteParams, ExternalError
-from model.emailBlacklist import EmailBlacklist
-from session import Session
-import datetime
+from flask import jsonify
+from ..errors.errors import NoContent
+from ..model.emailBlacklist import EmailBlacklist
+from ..session import Session
+
 
 class getBlacklist():
     def __init__(self,  email):
@@ -9,13 +10,15 @@ class getBlacklist():
         self.email = email
     
     def validar_email(self):
-        email_entry = EmailBlacklist.query.filter_by(email=self.email).first()
-    
-        if email_entry:
-            return jsonify({'mensaje': 'El email existe en la base de datos.', 'email': self.email}), 200
-        else:
-            return jsonify({'mensaje': 'El email no existe en la base de datos.', 'email': self.email}), 404
+        session = Session()
+        email_entry = session.query(EmailBlacklist).filter_by(email=self.email).first()
 
+        response = {}
+        response['exists'] = False
+        if email_entry:
+            response['exists'] = True
+            response['blocked_reason'] = email_entry.blocked_reason
+        else:
+            response['blocked_reason'] = None
         
-    except (TypeError):
-    raise ExternalError
+        return response

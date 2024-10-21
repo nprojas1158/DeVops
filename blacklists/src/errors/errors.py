@@ -6,6 +6,10 @@ class Unauthorized(ApiError):
     code = 401
     description = "Unauthorized"
 
+class NoContent(ApiError):
+    code = 204
+    description = "NoContent"
+
 class IncompleteParams(ApiError):
     code = 400
     description = "Bad request"
