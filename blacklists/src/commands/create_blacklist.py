@@ -12,7 +12,7 @@ class CreateBlacklist():
     def execute(self):
         # try:
         required_fields = ['email', 'app_uuid']
-        if not all(field in self.data for field in required_fields):
+        if not all(field in self.data and self.data[field] for field in required_fields):
             raise IncompleteParams()
 
         black_schema = EmailBlacklist(
