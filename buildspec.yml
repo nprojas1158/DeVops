@@ -1,9 +1,21 @@
-version: 0.2
-
 phases:
   pre_build:
     commands:
       - pip install -r requirements.txt
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 528757811031.dkr.ecr.us-east-1.amazonaws.com
+  build:
+    commands:
+      - pytest --cov-fail-under=70 --cov=src
+      - echo Build started on `date`
+      - echo Building the Docker image...          
+      - docker build -t pipeline_container .
+      - docker tag pipeline_container:latest 528757811031.dkr.ecr.us-east-1.amazonaws.com/pipeline_container:latest
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push 528757811031.dkr.ecr.us-east-1.amazonaws.com/pipeline_container:latest
 artifacts:
   files:
     - '**/*'
