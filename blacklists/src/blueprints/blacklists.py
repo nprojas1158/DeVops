@@ -32,7 +32,7 @@ def ValidarEmail(email):
 def auth_token():
     try:
         if 'Authorization' in request.headers:
-            authorization = request.headers['Authorization']
+            authorization = request.headers['Authorization']            
         else:
             raise MissingToken()
         return authorization
